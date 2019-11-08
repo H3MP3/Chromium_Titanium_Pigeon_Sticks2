@@ -1,0 +1,180 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "doyle assistant",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ViewScheduleIntent",
+                    "slots": [
+                        {
+                            "name": "day",
+                            "type": "AMAZON.DayOfWeek"
+                        }
+                    ],
+                    "samples": [
+                        "what is the tutoring schedule today",
+                        "who is tutoring today",
+                        "what is the schedule today",
+                        "is there tutoring now",
+                        "show me the schedule for the day",
+                        "are there tutors today",
+                        "what time is tutoring today"
+                    ]
+                },
+                {
+                    "name": "ViewTomorrowSchedule",
+                    "slots": [],
+                    "samples": [
+                        "what is the tutoring schedule tomorrow",
+                        "who is tutoring tomorrow",
+                        "what is the schedule tomorrow",
+                        "is there tutoring tomorrow",
+                        "show me the schedule for tomorrow",
+                        "are there tutors tomorrow",
+                        "what time is tutoring tomorrow"
+                    ]
+                },
+                {
+                    "name": "ViewScheduleForDate",
+                    "slots": [
+                        {
+                            "name": "day",
+                            "type": "AMAZON.DayOfWeek"
+                        }
+                    ],
+                    "samples": [
+                        "what is the tutoring schedule for {day}",
+                        "who is tutoring on {day}",
+                        "what is the schedule for {day}",
+                        "is there tutoring on {day}",
+                        "show me the schedule for {day}",
+                        "are there tutors on {day}",
+                        "what time is tutoring on {day}"
+                    ]
+                },
+                {
+                    "name": "AddStudentIntent",
+                    "slots": [
+                        {
+                            "name": "studentId",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "add {studentId} to tutoring",
+                        "check in {studentId}",
+                        "add {studentId}"
+                    ]
+                },
+                {
+                    "name": "SetCheckInCheckOutTime",
+                    "slots": [
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME"
+                        }
+                    ],
+                    "samples": [
+                        "{time}"
+                    ]
+                },
+                {
+                    "name": "SetSchedulerDay",
+                    "slots": [
+                        {
+                            "name": "days",
+                            "type": "AMAZON.DayOfWeek"
+                        }
+                    ],
+                    "samples": [
+                        "{days}"
+                    ]
+                },
+                {
+                    "name": "RemoveStudentIntent",
+                    "slots": [
+                        {
+                            "name": "studentToRemove",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "remove {studentToRemove} from check in",
+                        "remove {studentToRemove}",
+                        "cancel adding {studentToRemove}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "AMAZON.DayOfWeek",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "sundays"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "saturdays"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "fridays"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thursdays"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "wednesdays"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tuesdays"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "mondays"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
