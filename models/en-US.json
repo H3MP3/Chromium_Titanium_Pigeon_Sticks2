@@ -1,0 +1,123 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "loyola doyle assistant",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AddStudentIntent",
+                    "slots": [
+                        {
+                            "name": "StudentID",
+                            "type": "AMAZON.PhoneNumber",
+                            "samples": [
+                                "{StudentID}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "add {StudentID}",
+                        "add",
+                        "add student",
+                        "add student to check in"
+                    ]
+                },
+                {
+                    "name": "GetStudentIntent",
+                    "slots": [],
+                    "samples": [
+                        "get students",
+                        "list students",
+                        "which students are checked in",
+                        "who is checked in"
+                    ]
+                },
+                {
+                    "name": "RemoveStudentIntent",
+                    "slots": [
+                        {
+                            "name": "StudentID",
+                            "type": "AMAZON.PhoneNumber",
+                            "samples": [
+                                "{StudentID}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "remove {StudentID}",
+                        "remove",
+                        "remove student"
+                    ]
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "AddStudentIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "StudentID",
+                            "type": "AMAZON.PhoneNumber",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.932310416052.1004645578092"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "RemoveStudentIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "StudentID",
+                            "type": "AMAZON.PhoneNumber",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1034415917954.788060345760"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.932310416052.1004645578092",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Which student would you like to add "
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1034415917954.788060345760",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Which student would you like to remove "
+                    }
+                ]
+            }
+        ]
+    }
+}
