@@ -5,13 +5,16 @@ const Alexa = require('ask-sdk');
 const dbHelper = require('./helpers/dbHelper');
 const GENERAL_REPROMPT = "I am sorry, I didnt catch that. What would you like to do?";
 const dynamoDBTableName = "studentCheckIn-dynamoDB";
+const dynamoDBTutorTableName = "DoyleAssistantTutorSchedule";
+const dynamoDBTutorByDay = "DoyleAssistantTutorByDay";
+
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Hello there. Welcome to Doyle Assistant. What would you like to do? You can say add student to check-in a student or say help for more options.';
-    const repromptText = 'What would you like to do? You can say HELP to get available options';
+    const speechText = 'Hello there. Welcome to Doyle Assistant. What would you like to do? You can say help for all possible options.';
+    const repromptText = 'What would you like to do? You can say HELP to get all available options';
 
     return handlerInput.responseBuilder
       .speak(speechText)
@@ -137,6 +140,69 @@ const RemoveStudentIntentHandler = {
   }
 }
 
+const GetTutorIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetTutorIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const tutorName = slots.tutorName.value;
+    return dbHelper.getTutor(tutorName)
+      .then((data) => {
+        var speechText = tutorName + " is availble for tutoring on " 
+        if (data.length == 0) {
+          speechText = "There are no tutors with that name. Please try another tutor name."
+        } else {
+          speechText += data.map(e => e.Day).join(" ") 
+        } 
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        const speechText = "I cannot find the tutor list right now. Please try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
+  }
+}
+
+const GetTutorByDayHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetTutorByDayIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const WeekDay = slots.WeekDay.value;
+    return dbHelper.getTutorByDay(WeekDay)
+      .then((data) => {
+        var speechText = "On " 
+        if (data.length == 0) {
+          speechText = "There are no tutors currently available on " + WeekDay
+        } else {
+          speechText += WeekDay + " ," + data.map(e => e.Tutors)
+        }
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        const speechText = "Please try again and use a valid week day."
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
+  }
+}
+
+
 const HelpIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -204,9 +270,13 @@ exports.handler = skillBuilder
     RemoveStudentIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
-    SessionEndedRequestHandler
+    SessionEndedRequestHandler,
+    GetTutorIntentHandler,
+    GetTutorByDayHandler
   )
   .addErrorHandlers(ErrorHandler)
   .withTableName(dynamoDBTableName)
+  .withTableName(dynamoDBTutorTableName)
+  .withTableName(dynamoDBTutorByDay)
   .withAutoCreateTable(true)
   .lambda();

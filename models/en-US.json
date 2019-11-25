@@ -44,6 +44,41 @@
                     ]
                 },
                 {
+                    "name": "GetTutorByDayIntent",
+                    "slots": [
+                        {
+                            "name": "WeekDay",
+                            "type": "AMAZON.DayOfWeek",
+                            "samples": [
+                                "{WeekDay}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "get tutoring schedule for {WeekDay}",
+                        "what tutors are available on {WeekDay}"
+                    ]
+                },
+
+                {
+                    "name": "GetTutorIntent",
+                    "slots": [
+                        {
+                            "name": "tutorName",
+                            "type": "AMAZON.FirstName",
+                            "samples": [
+                                "{tutorName}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "whats {tutorName} tutoring schedule",
+                        "what is {tutorName} tutoring schedule",
+                        "get tutoring schedule for {tutorName}"
+                    ]
+                },
+
+                {
                     "name": "RemoveStudentIntent",
                     "slots": [
                         {
