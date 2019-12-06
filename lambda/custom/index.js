@@ -8,6 +8,11 @@ const dynamoDBTableName = "studentCheckIn-dynamoDB";
 const dynamoDBTutorTableName = "DoyleAssistantTutorSchedule";
 const dynamoDBTutorByDay = "DoyleAssistantTutorByDay";
 
+/**
+ * Entry point for lambda service
+ * - Called when user asks alexa to open doyle assistant
+ * - Returns a welcome message
+ */
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
@@ -23,6 +28,9 @@ const LaunchRequestHandler = {
   },
 };
 
+/**
+ * Built in function to set events while a student intent is being executed
+ */
 const InProgressAddStudentIntentHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
@@ -38,6 +46,12 @@ const InProgressAddStudentIntentHandler = {
   }
 }
 
+/**
+ * Opens a new intent request upon alexa hearing the AddStudent intent
+ * - gathers the Student ID from the sample
+ * - tosses to dbhelper
+ * - throws error when studentID doesn't exist
+ */
 const AddStudentIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -50,6 +64,8 @@ const AddStudentIntentHandler = {
     const studentID = slots.StudentID.value;
     return dbHelper.addStudent(studentID, userID)
       .then((data) => {
+		// "<say-as interpret-as='digits'" fixed bug of Alexa reading numbers naturally
+		// space added between I D to get Alexa to speak it correctly
         const speechText = `You have checked in student I D <say-as interpret-as="digits">${studentID}</say-as>. You can say add student to check-in another student or say HELP for available options`;
         return responseBuilder
           .speak(speechText)
@@ -66,6 +82,11 @@ const AddStudentIntentHandler = {
   },
 };
 
+/**
+ * Opens a new intent request upon alexa hearing the GetStudent intent
+ * - queries database for the requested userID
+ * - returns the data if present, else throws error
+ */
 const GetStudentIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -97,6 +118,9 @@ const GetStudentIntentHandler = {
   }
 }
 
+/**
+ * Built in function to set events while a student intent is being executed
+ */
 const InProgressRemoveStudentIntentHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
@@ -112,6 +136,12 @@ const InProgressRemoveStudentIntentHandler = {
   }
 }
 
+/**
+ * Opens a new intent request upon alexa hearing the AddStudent intent
+ * - gathers the Student ID from the sample
+ * - tosses to dbhelper which tries to delete the studentID from the database
+ * - throws error when studentID doesn't exist either in query or in database
+ */
 const RemoveStudentIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -140,6 +170,12 @@ const RemoveStudentIntentHandler = {
   }
 }
 
+/**
+ * Opens a new intent request upon alexa hearing the getTutor intent
+ * - gathers the tutorName from the sample
+ * - tosses to dbhelper
+ * - throws error when tutorName doesn't exist
+ */
 const GetTutorIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -171,6 +207,12 @@ const GetTutorIntentHandler = {
   }
 }
 
+/**
+ * Opens a new intent request upon alexa hearing the getTutorByDay intent
+ * - gathers the weekday from the sample
+ * - tosses to dbhelper for a get request
+ * - throws error when weekday doesn't exist or when there are no tutors available on the queried day
+ */
 const GetTutorByDayHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -202,7 +244,9 @@ const GetTutorByDayHandler = {
   }
 }
 
-
+/**
+ * Returns a simple help prompt
+ */
 const HelpIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -218,6 +262,9 @@ const HelpIntentHandler = {
   },
 };
 
+/**
+ * Built in funciton to handle cancel and stop requests while the doyle assistant is open
+ */
 const CancelAndStopIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
