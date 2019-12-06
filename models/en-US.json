@@ -40,7 +40,10 @@
                         "get students",
                         "list students",
                         "which students are checked in",
-                        "who is checked in"
+                        "who is checked in",
+						"are there any students checked in",
+						"get checked in students",
+						"are any students in"
                     ]
                 },
                 {
@@ -57,6 +60,10 @@
                     "samples": [
                         "get tutoring schedule for {WeekDay}",
                         "what tutors are available on {WeekDay}"
+						"who is available on {WeekDay}",
+						"who is here on {WeekDay}",
+						"are there any tutors available on {Weekday}",
+						"is anybody available on {WeekDay}"
                     ]
                 },
 
@@ -74,7 +81,7 @@
                     "samples": [
                         "whats {tutorName} tutoring schedule",
                         "what is {tutorName} tutoring schedule",
-                        "get tutoring schedule for {tutorName}"
+                        "get tutoring schedule for {tutorName}",
                     ]
                 },
 
