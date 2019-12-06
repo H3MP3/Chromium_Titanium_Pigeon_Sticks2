@@ -63,7 +63,9 @@
 						"who is available on {WeekDay}",
 						"who is here on {WeekDay}",
 						"are there any tutors available on {Weekday}",
-						"is anybody available on {WeekDay}"
+						"is anybody available on {WeekDay}",
+			    			"is there a tutor on {WeekDay},
+			    			"who can help me on {WeekDay}
                     ]
                 },
 
@@ -82,6 +84,8 @@
                         "whats {tutorName} tutoring schedule",
                         "what is {tutorName} tutoring schedule",
                         "get tutoring schedule for {tutorName}",
+			"is {tutorName} available today",
+			"can i get {tutorName} tutoring schedule"    
                     ]
                 },
 
